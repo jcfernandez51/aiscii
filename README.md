@@ -21,7 +21,7 @@ Con Vercel CLI instalado inicia sesion y vincula el proyecto:
 vercel login
 vercel link
 ```
-Añade las variables de entorno y compruebalas
+Añade las variables de entorno y compruebalas:
 ```bash
 vercel env add AI_BASE_URL production
 vercel env add AI_API_KEY production --sensitive
