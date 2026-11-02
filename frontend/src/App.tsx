@@ -87,7 +87,7 @@ export default function App() {
     <main className="mx-auto max-w-2xl px-5 py-12 sm:py-20">
       <header className="mb-8">
         <h1 className="font-mono text-4xl font-bold tracking-tight">aiscii</h1>
-        <p className="mt-2 text-slate-600">Describe una idea y conviértela en arte ASCII.</p>
+        <p className="mt-2 text-slate-400">Describe una idea y conviértela en arte ASCII.</p>
       </header>
 
       <form onSubmit={enviar}>
@@ -105,9 +105,9 @@ export default function App() {
           disabled={cargando}
           aria-describedby="contador"
           placeholder="Por ejemplo: un pato nadando"
-          className="block w-full resize-y rounded-lg border border-slate-300 bg-white p-3 outline-none focus:border-teal-700 focus:ring-2 focus:ring-teal-700/20 disabled:opacity-60"
+          className="block w-full resize-y rounded-lg border border-slate-600 bg-slate-900 p-3 outline-none placeholder:text-slate-400 focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20 disabled:opacity-60"
         />
-        <p id="contador" className="mt-1 text-right text-sm text-slate-500">
+        <p id="contador" className="mt-1 text-right text-sm text-slate-400">
           {descripcion.length}/200
         </p>
 
@@ -115,7 +115,7 @@ export default function App() {
           <button
             type="submit"
             disabled={cargando || !descripcion.trim()}
-            className="rounded-lg bg-teal-800 px-5 py-2.5 font-medium text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg bg-teal-400 px-5 py-2.5 font-medium text-slate-950 hover:bg-teal-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Generar
           </button>
@@ -123,24 +123,24 @@ export default function App() {
             type="button"
             onClick={probarSuerte}
             disabled={cargando}
-            className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg border border-slate-600 bg-slate-800 px-5 py-2.5 font-medium hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Voy a tener suerte
           </button>
         </div>
       </form>
 
-      {error && <p role="alert" className="mt-5 text-red-700">{error}</p>}
+      {error && <p role="alert" className="mt-5 text-red-400">{error}</p>}
 
       <section aria-labelledby="resultado" aria-busy={cargando} className="mt-8">
         <h2 id="resultado" className="mb-3 font-medium">Tu dibujo</h2>
-        <div aria-live="polite" className="min-h-48 rounded-lg border border-slate-200 bg-white p-5">
+        <div aria-live="polite" className="min-h-48 rounded-lg border border-slate-700 bg-slate-950 p-5">
           {cargando ? (
-            <p role="status" className="text-slate-500">Generando dibujo…</p>
+            <p role="status" className="text-slate-400">Generando dibujo…</p>
           ) : dibujo ? (
             <pre className="overflow-x-auto whitespace-pre font-mono text-sm leading-5">{dibujo}</pre>
           ) : (
-            <p className="text-slate-500">Tu dibujo aparecerá aquí.</p>
+            <p className="text-slate-400">Tu dibujo aparecerá aquí.</p>
           )}
         </div>
       </section>
