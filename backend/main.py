@@ -1,0 +1,30 @@
+from typing import Annotated
+
+from fastapi import FastAPI
+from pydantic import BaseModel, StringConstraints
+
+from backend.gen import generar_ascii
+
+
+app = FastAPI(title="aiscii")
+
+
+class Peticion(BaseModel):
+    descripcion: Annotated[
+        str, StringConstraints(strip_whitespace=True, min_length=1, max_length=500)
+    ]
+
+
+class Respuesta(BaseModel):
+    ascii: str
+
+
+@app.get("/api/health")
+def health():
+    return {"status": "ok"}
+
+
+@app.post("/api/generar", response_model=Respuesta)
+async def generar(peticion: Peticion):
+    dibujo = await generar_ascii(peticion.descripcion)
+    return Respuesta(ascii=dibujo)

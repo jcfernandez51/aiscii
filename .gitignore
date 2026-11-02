@@ -1,0 +1,22 @@
+contexto.md
+enunciado.md
+
+# Configuración privada. El ejemplo con valores ficticios sí se publica.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Frontend
+node_modules/
+dist/
+
+# Configuración local de despliegue
+.vercel/
