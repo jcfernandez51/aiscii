@@ -3,7 +3,7 @@
   "framework": "fastapi",
   "buildCommand": "npm --prefix frontend ci && npm --prefix frontend run build",
   "functions": {
-    "backend/main.py": {
+    "index.py": {
       "maxDuration": 60,
       "excludeFiles": "{backend/tests/**,backend/.venv/**,frontend/node_modules/**}"
     }
