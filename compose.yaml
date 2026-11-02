@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        CLERK_PUBLISHABLE_KEY: ${CLERK_PUBLISHABLE_KEY:?Configura la clave publicable de Clerk en .env}
+        CLERK_PUBLISHABLE_KEY: ${CLERK_PUBLISHABLE_KEY}
     ports:
       - "8080:8080"
     env_file:
