@@ -2,6 +2,7 @@ contexto.md
 enunciado.md
 
 # Configuración privada.
+.env
 .env.*
 !.env.example
 

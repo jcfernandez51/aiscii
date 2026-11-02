@@ -1,0 +1,2 @@
+# Vercel instala las dependencias desde la raíz del proyecto
+-r backend/requirements.txt

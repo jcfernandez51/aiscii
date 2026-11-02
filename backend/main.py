@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Annotated
 
 from fastapi import FastAPI
@@ -28,3 +29,11 @@ def health():
 async def generar(peticion: Peticion):
     dibujo = await generar_ascii(peticion.descripcion)
     return Respuesta(ascii=dibujo)
+
+
+# Servir frontend junto a la api
+app.frontend(
+    "/",
+    directory=Path(__file__).resolve().parent.parent / "frontend" / "dist",
+    check_dir=False,
+)
