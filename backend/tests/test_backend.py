@@ -21,12 +21,13 @@ def cliente(monkeypatch):
     return lambda entrada: asyncio.run(enviar(entrada))
 
 
-def test_generar_ascii(cliente, monkeypatch):
+@pytest.mark.parametrize("descripcion", ["  un gato  ", "x" * 200])
+def test_generar_ascii(cliente, monkeypatch, descripcion):
     async def proveedor_simulado(self, url, **kwargs):
         assert url == "https://proveedor.example.com/v1/chat/completions"
         assert kwargs["headers"]["Authorization"] == "Bearer clave-de-prueba"
         assert kwargs["json"]["model"] == "modelo-de-prueba"
-        assert kwargs["json"]["messages"][-1]["content"] == "un gato"
+        assert kwargs["json"]["messages"][-1]["content"] == descripcion.strip()
         return httpx.Response(
             200,
             request=httpx.Request("POST", url),
@@ -34,13 +35,13 @@ def test_generar_ascii(cliente, monkeypatch):
         )
 
     monkeypatch.setattr(httpx.AsyncClient, "post", proveedor_simulado)
-    respuesta = cliente({"descripcion": "  un gato  "})
+    respuesta = cliente({"descripcion": descripcion})
 
     assert respuesta.status_code == 200
     assert respuesta.json() == {"ascii": "  /\\_/\\\n ( o.o )"}
 
 
-@pytest.mark.parametrize("entrada", [{}, {"descripcion": "   "}, {"descripcion": "x" * 501}])
+@pytest.mark.parametrize("entrada", [{}, {"descripcion": "   "}, {"descripcion": "x" * 201}])
 def test_entrada_invalida(cliente, monkeypatch, entrada):
     async def no_debe_llamar(self, *args, **kwargs):
         pytest.fail("Una entrada inválida no debe consumir la API de IA")

@@ -11,7 +11,7 @@ app = FastAPI(title="aiscii")
 
 class Peticion(BaseModel):
     descripcion: Annotated[
-        str, StringConstraints(strip_whitespace=True, min_length=1, max_length=500)
+        str, StringConstraints(strip_whitespace=True, min_length=1, max_length=200)
     ]
 
 
