@@ -3,8 +3,8 @@
 Miniaplicación de generación de arte ASCII con IA para la práctica UD1 de
 Explotación de Servicios de Procesamiento y Analítica de Datos.
 
-**Estado:** backend implementado y tests simulados comprobados en la VM; pendiente
-de una prueba real con GoModel. Este README es provisional y se actualizará con los
+**Estado:** backend implementado, tests simulados y generación real con GoModel
+comprobados en la VM. Este README es provisional y se actualizará con los
 comandos y resultados comprobados en cada hito. Integrantes y aportaciones:
 pendientes de identificar.
 
@@ -110,7 +110,7 @@ nano .env
 El backend añade `/chat/completions` a `AI_BASE_URL` y envía la clave en la
 cabecera `Authorization: Bearer ...`. Usa `model`, `messages` y `max_tokens`
 siguiendo el formato de [Chat Completions](https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create).
-La compatibilidad concreta del modelo con GoModel queda pendiente de la prueba real.
+La compatibilidad de la configuración actual con GoModel se ha comprobado mediante una petición real.
 
 ### Arranque
 
@@ -171,8 +171,17 @@ La petición válida comprueba también URL, cabecera de autenticación, modelo,
 descripción y conservación de espacios del dibujo. La entrada inválida comprueba
 que no se llama al proveedor. En los errores se verifica que no se filtran sus detalles.
 
-Pendiente para cerrar `v0.1-backend`: configurar GoModel y comprobar una
-generación real. No se ha creado ni publicado el tag.
+Prueba real realizada en `espad` el 02/11/2026 con la descripción `un pato`:
+HTTP **200**, JSON con el campo `ascii`, dibujo de **425 caracteres y 19 líneas**,
+compuesto por ASCII imprimible y saltos de línea. Se usó el `.env` privado de la
+raíz sin mostrar sus valores.
+
+En el primer intento falló la resolución DNS del servidor configurado y el
+backend devolvió un `502` controlado. Tras la comprobación DNS del usuario, se
+repitió la petición con éxito; no se modificó el código para resolverlo.
+
+Las comprobaciones del backend están completadas. No se ha creado ni publicado
+el tag `v0.1-backend`.
 
 ## Hitos y versiones
 
