@@ -1,8 +1,9 @@
 
 
 
+## Despliegue
 
-## Ejecutar en local
+### Ejecutar en local
 En dos terminales ejecuta:
 ```bash
 backend/.venv/bin/python -m uvicorn backend.main:app --env-file .env
@@ -10,9 +11,11 @@ backend/.venv/bin/python -m uvicorn backend.main:app --env-file .env
 ```bash
 cd frontend && npm run dev
 ``` 
-Luego accede a http://localhost:5173 para acceder a la aplicación.
+Luego visita http://localhost:5173 para acceder a la aplicación.
 
-## Desplegar en Vercel
+### Ejecutar en local con Docker
+
+### Desplegar en Vercel
 Con Vercel CLI instalado inicia sesion y vincula el proyecto:
 ```bash
 vercel login
