@@ -31,7 +31,7 @@ def test_generar_ascii(cliente, monkeypatch, descripcion):
         return httpx.Response(
             200,
             request=httpx.Request("POST", url),
-            json={"choices": [{"message": {"content": "```text\n  /\\_/\\\n ( o.o )\n```"}}]},
+            json={"choices": [{"message": {"content": "  /\\_/\\\n ( o.o )"}}]},
         )
 
     monkeypatch.setattr(httpx.AsyncClient, "post", proveedor_simulado)
