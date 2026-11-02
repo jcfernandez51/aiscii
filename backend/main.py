@@ -1,10 +1,11 @@
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from pydantic import BaseModel, StringConstraints
 
 from backend.gen import generar_ascii
+from backend.auth import exigir_sesion
 
 
 app = FastAPI(title="aiscii")
@@ -25,7 +26,7 @@ def health():
     return {"status": "ok"}
 
 
-@app.post("/api/generar", response_model=Respuesta)
+@app.post("/api/generar", response_model=Respuesta, dependencies=[Depends(exigir_sesion)])
 async def generar(peticion: Peticion):
     dibujo = await generar_ascii(peticion.descripcion)
     return Respuesta(ascii=dibujo)

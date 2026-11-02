@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import { SignIn, useAuth } from '@clerk/react'
 
 const ideas = [
   'un pato',
@@ -16,7 +17,8 @@ const ideas = [
   'un pez',
 ]
 
-export default function App() {
+function Generador() {
+  const { getToken } = useAuth()
   const [descripcion, setDescripcion] = useState('')
   const [dibujo, setDibujo] = useState('')
   const [cargando, setCargando] = useState(false)
@@ -34,9 +36,16 @@ export default function App() {
     setDibujo('')
 
     try {
+      const token = await getToken()
+      if (!token) {
+        throw new Error('La sesión ha caducado. Inicia sesión de nuevo.')
+      }
       const respuesta = await fetch('/api/generar', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ descripcion: texto.trim() }),
         signal: AbortSignal.timeout(35000),
       })
@@ -84,12 +93,7 @@ export default function App() {
   }
 
   return (
-    <main className="mx-auto max-w-2xl px-5 py-12 sm:py-20">
-      <header className="mb-8">
-        <h1 className="font-mono text-4xl font-bold tracking-tight">aiscii</h1>
-        <p className="mt-2 text-neutral-400">Describe una idea y conviértela en arte ASCII.</p>
-      </header>
-
+    <>
       <form onSubmit={enviar}>
         <label htmlFor="descripcion" className="mb-2 block font-medium">
           ¿Qué quieres dibujar?
@@ -144,6 +148,41 @@ export default function App() {
           )}
         </div>
       </section>
+    </>
+  )
+}
+
+export default function App() {
+  const { isLoaded, isSignedIn, signOut } = useAuth()
+
+  return (
+    <main className="mx-auto max-w-2xl px-5 py-12 sm:py-20">
+      <header className="mb-8">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <h1 className="font-mono text-4xl font-bold tracking-tight">aiscii</h1>
+          {isLoaded && isSignedIn && (
+            <button
+              type="button"
+              onClick={() => void signOut()}
+              className="rounded-lg border border-green-400 px-4 py-2 text-green-400 hover:bg-green-400/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-400"
+            >
+              Cerrar sesión
+            </button>
+          )}
+        </div>
+        <p className="mt-2 text-neutral-400">Describe una idea y conviértela en arte ASCII.</p>
+      </header>
+
+      {!isLoaded ? (
+        <p role="status" className="text-neutral-400">Comprobando sesión…</p>
+      ) : isSignedIn ? (
+        <Generador />
+      ) : (
+        <section>
+          <p className="mb-5 text-neutral-300">Inicia sesión para generar tus dibujos.</p>
+          <SignIn routing="hash" />
+        </section>
+      )}
     </main>
   )
 }
