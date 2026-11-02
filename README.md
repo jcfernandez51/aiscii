@@ -26,7 +26,7 @@ Añade las variables de entorno y compruebalas:
 vercel env add AI_BASE_URL production
 vercel env add AI_API_KEY production --sensitive
 vercel env add AI_MODEL production
-vercel env add VITE_CLERK_PUBLISHABLE_KEY production
+vercel env add CLERK_PUBLISHABLE_KEY production
 vercel env add CLERK_SECRET_KEY production --sensitive
 vercel env add CLERK_AUTHORIZED_PARTIES production
 
